@@ -39,11 +39,13 @@ def encode():
         return Response(response=json.dumps(obj='Source and Message not uploaded.'), status=400,
                         mimetype='application/json')
 
-
     try:
-        #TODO fix message_type
         source = Source(source_image, source_type='image')
-        message = Message(m, message_type='image')
+        try:
+            message = Message(m, message_type='image')
+        except:
+            message = Message(m, message_type='text_stream')
+
         encoded = Steganography.encode(source, message, bit_split)
         image_encoded = Image.fromarray(encoded)
         data = {'message': get_base_64_str(image_encoded)}
