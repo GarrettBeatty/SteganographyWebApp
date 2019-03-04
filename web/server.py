@@ -9,7 +9,7 @@ from flask import request
 
 from steganography.message import Message
 from steganography.source import Source
-from steganography.steg import Steganography
+from steganography.steganography import Steganography
 
 app = Flask(__name__)
 
