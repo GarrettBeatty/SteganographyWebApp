@@ -17,6 +17,9 @@ window.onload = function () {
                 $("#message").hide();
                 $("#img").show();
                 $("#img").attr('src', 'data:image/png;base64,' + data.message);
+                $("#img").click(function () {
+                    downloadFile(data.message, "file.png");
+                })
             },
             error: function (data) {
                 alert(data.responseText);
@@ -55,3 +58,24 @@ window.onload = function () {
     });
 };
 
+function downloadFile(data, fileName) {
+        var pngData = data;
+        var blob = new Blob([ pngData ], {
+            type : "image/png"
+        });
+
+        if (window.navigator.msSaveBlob) {
+            // FOR IE BROWSER
+            navigator.msSaveBlob(blob, fileName);
+        } else {
+            // FOR OTHER BROWSERS
+            var link = document.createElement("a");
+            var pngUrl = URL.createObjectURL(blob);
+            link.href = pngUrl;
+            link.style = "visibility:hidden";
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+}
