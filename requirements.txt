@@ -1,0 +1,4 @@
+Flask==1.0.2
+gunicorn==19.9.0
+git+git://github.com/GarrettBeatty/Steganography@master#egg=steganography
+
