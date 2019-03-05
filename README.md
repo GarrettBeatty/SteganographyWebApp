@@ -13,7 +13,6 @@ pip3 install -r requirements.txt
 ## How to Run
 
 ```
-cd src
 export FLASK_APP=web/server.py
 python3 -m flask run
 ```
