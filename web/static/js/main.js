@@ -50,6 +50,13 @@ window.onload = function () {
                     $("#message").hide();
                     $("#img").show();
                     $("#img").attr('src', 'data:image/png;base64,' + data.message);
+                    var a = document.createElement("a");
+                    var blob = b64toBlob(data.message, 'image/png');
+                    var blobUrl = URL.createObjectURL(blob);
+                    a.href = blobUrl;
+                    a.download = 'file.png';
+                    a.click();
+                    window.URL.revokeObjectURL(blobUrl);
                 } else {
                     $("#message").show();
                     $("#img").hide();
