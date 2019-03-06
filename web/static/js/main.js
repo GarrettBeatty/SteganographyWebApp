@@ -17,6 +17,14 @@ window.onload = function () {
                 $("#message").hide();
                 $("#img").show();
                 $("#img").attr('src', 'data:image/png;base64,' + data.message);
+                var a = document.createElement("a");
+                var blob = b64toBlob(data.message, 'image/png');
+                var blobUrl = URL.createObjectURL(blob);
+                a.href = blobUrl;
+                a.download = 'file.png';
+                a.click();
+                window.URL.revokeObjectURL(blobUrl);
+
             },
             error: function (data) {
                 alert(data.responseText);
@@ -53,26 +61,29 @@ window.onload = function () {
             },
         });
     });
+
+    function b64toBlob(b64Data, contentType, sliceSize) {
+        contentType = contentType || '';
+        sliceSize = sliceSize || 512;
+
+        var byteCharacters = atob(b64Data);
+        var byteArrays = [];
+
+        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            var byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            var byteArray = new Uint8Array(byteNumbers);
+
+            byteArrays.push(byteArray);
+        }
+
+        var blob = new Blob(byteArrays, {type: contentType});
+        return blob;
+    }
 };
 
-// function downloadFile(data, fileName) {
-//         var pngData = data;
-//         var blob = new Blob([ pngData ], {
-//             type : "image/png"
-//         });
-//
-//         if (window.navigator.msSaveBlob) {
-//             // FOR IE BROWSER
-//             navigator.msSaveBlob(blob, fileName);
-//         } else {
-//             // FOR OTHER BROWSERS
-//             var link = document.createElement("a");
-//             var pngUrl = URL.createObjectURL(blob);
-//             link.href = pngUrl;
-//             link.style = "visibility:hidden";
-//             link.download = fileName;
-//             document.body.appendChild(link);
-//             link.click();
-//             document.body.removeChild(link);
-//         }
-// }
