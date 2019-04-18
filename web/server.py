@@ -41,11 +41,11 @@ def encode():
 
     try:
 
-        try:
-            encoded = Steganography.encode(source_image, message, bit_split, source_type='image', message_type='image')
-        except:
-            encoded = Steganography.encode(source_image, message, bit_split, source_type='image',
-                                           message_type='text_stream')
+        # try:
+        encoded = Steganography.encode(source_image, message, bit_split, source_type='image', message_type='image')
+        # except:
+        #     encoded = Steganography.encode(source_image, message, bit_split, source_type='image',
+        #                                    message_type='text_stream')
 
         image_encoded = Image.fromarray(encoded)
         data = {'message': get_base_64_str(image_encoded)}
